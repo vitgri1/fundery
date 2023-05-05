@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Idea;
 use App\Models\Donation;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class IdeaController extends Controller
@@ -42,7 +43,9 @@ class IdeaController extends Controller
 
     public function create()
     {
-        return view('back.ideas.create');
+        return view('back.ideas.create', [
+            'tags' => Tag::all()
+        ]);
     }
 
     public function store(Request $request)

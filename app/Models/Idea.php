@@ -9,7 +9,9 @@ class Idea extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'type'];
+    protected $fillable = ['title', 'description', 'type', 'funds', 'created_at', 'tag_id'];
+    public $timestamps = false;
+    
     const SORT = [
         'title_asc' => 'By title A-Z',
         'title_desc' => 'By title Z-A',

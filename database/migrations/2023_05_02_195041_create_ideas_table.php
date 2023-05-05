@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('ideas', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->dateTime('created_at');
             $table->string('title', 100);
             $table->string('description', 1000);
             $table->unsignedTinyInteger('type'); //0 - not approved; 1 - approved;
             $table->unsignedBigInteger('funds');
+            $table->unsignedBigInteger('tag_id');
+            $table->foreign('tag_id')->references('id')->on('tags');
         });
     }
 

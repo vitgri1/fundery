@@ -25,6 +25,16 @@
                             <label class="form-label">Funds you are asking</label>
                             <input type="text" class="form-control" name="funds" value={{old('funds')}}>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label">#hash-tags</label>
+                            <select class="form-select" name="tags">
+                                <option value="0">Hash-tags</option>
+                                @foreach($tags as $tag)
+                                <option value="{{$tag->id}}" @if($tag->id == old('tag_id')) selected @endif>
+                                {{$tag->title}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         @csrf
                     </form>

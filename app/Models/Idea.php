@@ -9,8 +9,12 @@ class Idea extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'type', 'funds', 'created_at', 'tag_id'];
+    protected $fillable = ['title', 'description', 'type', 'funds', 'created_at', 'tag_ids', 'hearts'];
     public $timestamps = false;
+    protected $casts = [
+        'tag_ids' => 'array',
+        'hearts' => 'array',
+    ];
     
     const SORT = [
         'title_asc' => 'By title A-Z',

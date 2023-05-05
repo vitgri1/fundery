@@ -47,14 +47,23 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        function uniqueTagsArray()
+        {
+            $uniqueTags = range(1,15);
+            shuffle($uniqueTags);
+            return array_slice($uniqueTags, 0, rand(1,6));
+        }
+        
         foreach(range(1, 15) as $_) {
             DB::table('ideas')->insert([
                 'title' => $faker->word,
                 'description' => $faker->text($maxNbChars = 200),
                 'type' => rand(0,1),
                 'funds' => rand(1,99999),
-                'tag_id' => rand(1,15),
-                'created_at' => $faker->dateTime
+                // 'tag_ids' => json_encode(array_map(fn($t)=>$t = rand(1,15), range(1,rand(1,6)))),
+                'tag_ids' => json_encode(uniqueTagsArray()),
+                'created_at' => $faker->dateTime,
+                'hearts' => json_encode([])
             ]);
         }
 

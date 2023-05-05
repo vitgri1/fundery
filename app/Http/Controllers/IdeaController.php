@@ -109,6 +109,17 @@ class IdeaController extends Controller
         ->with('ok', 'Your pledge was accepted');
     }
 
+    public function like(Request $request, Idea $idea)
+    {
+        $hearts = $idea->hearts;
+        $hearts[] = $request->heart_id;
+        $idea->hearts = $hearts;
+        $idea->save();
+        return redirect()
+        ->route('ideas-index')
+        ->with('ok', 'Your like was saved');
+    }
+
     public function destroy(Idea $idea)
     {
         $idea->delete();

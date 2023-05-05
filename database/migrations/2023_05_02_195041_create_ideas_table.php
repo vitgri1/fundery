@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('description', 1000);
             $table->unsignedTinyInteger('type'); //0 - not approved; 1 - approved;
             $table->unsignedBigInteger('funds');
-            $table->unsignedBigInteger('tag_id');
-            $table->foreign('tag_id')->references('id')->on('tags');
+            $table->json('tag_ids');
+            $table->json('hearts');
         });
     }
 

@@ -71,6 +71,12 @@
                                 <div class="buttons">
                                     <a href="{{route('ideas-show', $idea)}}" class="btn btn-info">Show</a>
                                     <a href="{{route('ideas-edit', $idea)}}" class="btn btn-primary">Edit</a>
+                                    <form action="{{route('ideas-like', $idea)}}" method="post" class="mb-3">
+                                        <input type="hidden" name="heart_id" value="{{$user->id}}">
+                                        <button type="submit" class="btn btn-outline-warning">Like</button>
+                                        @csrf
+                                        @method('put')
+                                    </form>
                                 </div>
                                 <div>
                                     <form action="{{route('ideas-pledge', $idea)}}" method="post" class="input-group mb-3">

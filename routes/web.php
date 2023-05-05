@@ -31,6 +31,7 @@ Route::name('ideas-')->group(function () {
     Route::get('/edit/{idea}', [I::class, 'edit'])->name('edit');
     Route::put('/edit/{idea}', [I::class, 'update'])->name('update');
     Route::put('/pledge/{idea}', [I::class, 'pledge'])->name('pledge');
+    Route::put('/like/{idea}', [I::class, 'like'])->name('like');
     Route::get('/confirm/{idea}', [I::class, 'confirm'])->name('confirm');
     Route::delete('/delete/{idea}', [I::class, 'destroy'])->name('delete');
 });

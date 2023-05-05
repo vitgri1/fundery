@@ -21,6 +21,10 @@
                             <label class="form-label">Description of the idea</label>
                             <textarea class="form-control" name="description" rows="4" cols="50"></textarea>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label">Funds you are asking</label>
+                            <input type="text" class="form-control" name="funds" value={{old('funds')}}>
+                        </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         @csrf
                     </form>

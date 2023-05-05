@@ -19,9 +19,7 @@
                         {{-- input for description of idea --}}
                         <div class="mb-3">
                             <label class="form-label">Description of the idea</label>
-                            <textarea name="description" rows="4" cols="50">
-                                {{ old('description', $idea->description) }}
-                            </textarea>
+                            <textarea class="form-control" name="description" rows="4" cols="50">{{ old('description', $idea->description) }}</textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         @csrf

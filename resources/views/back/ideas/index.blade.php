@@ -72,6 +72,15 @@
                                     <a href="{{route('ideas-show', $idea)}}" class="btn btn-info">Show</a>
                                     <a href="{{route('ideas-edit', $idea)}}" class="btn btn-primary">Edit</a>
                                 </div>
+                                <div>
+                                    <form action="{{route('ideas-pledge', $idea)}}" method="post" class="input-group mb-3">
+                                        <input class="form-control" type="text" name="amount">
+                                        <input type="hidden" name="donator_id" value="{{$user->id}}">
+                                        <button type="submit" class="btn btn-warning">Donate</button>
+                                        @csrf
+                                        @method('put')
+                                    </form>
+                                </div>
                             </div>
                         </li>
                         @empty

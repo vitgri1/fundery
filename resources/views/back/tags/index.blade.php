@@ -47,7 +47,7 @@
                                 <div class="col-3">
                                     <div class="sort-filter-buttons">
                                         <button type="submit" class="btn btn-primary">Submit</button>
-                                        <a href="{{route('clients-index')}}" class="btn btn-danger">Clear</a>
+                                        <a href="{{route('tags-index')}}" class="btn btn-danger">Clear</a>
                                     </div>
                                 </div>
                             </div>
@@ -60,8 +60,16 @@
                         @forelse($tags as $tag)
                         <li class="list-group-item">
                             <div class="client-line">
+                                <div>
+                                    {{$tag->title}}
+                                </div>
                                 <div class="buttons">
                                     <a href="{{route('tags-edit', $tag)}}" class="btn btn-primary">Edit</a>
+                                    <form action="{{route('tags-delete', $tag)}}" method="post">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        @csrf
+                                        @method('delete')
+                                    </form>
                                 </div>
                             </div>
                         </li>

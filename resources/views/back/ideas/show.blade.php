@@ -18,6 +18,29 @@
                         <div>
                             {{$idea->description}}
                         </div>
+                        <div>
+                            <ul class="list-group">
+                                @forelse ($donations as $donation)
+                                <li class="list-group-item">
+                                    <div>
+                                        {{$donation->amount}} eur
+                                    </div>
+                                    <div>
+                                        {{$donation->created_at}} 
+                                    </div>
+                                    <div>
+                                        {{$donation->donator()}}
+                                    </div>
+                                </li>
+                                @empty
+                                <li class="list-group-item">
+                                    <div>
+                                    There are no donations here yet
+                                    </div>
+                                </li>
+                                @endforelse
+                            </ul>
+                        </div>
                     </div>
                     {{-- buttons --}}
                     <div class="buttons">

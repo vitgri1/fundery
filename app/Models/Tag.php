@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Idea extends Model
+class Tag extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'type'];
+    protected $fillable = ['title'];
+    public $timestamps = false;
     const SORT = [
         'title_asc' => 'By title A-Z',
         'title_desc' => 'By title Z-A',
@@ -28,9 +29,4 @@ class Idea extends Model
         '50' => '50',
         '100' => '100',
     ];
-
-    public function donations()
-    {
-        return $this->hasMany(Donation::class);
-    }
 }

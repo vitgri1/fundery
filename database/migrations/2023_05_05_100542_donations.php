@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ideas', function (Blueprint $table) {
+        Schema::create('donations', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->string('title', 100);
-            $table->string('description', 1000);
-            $table->unsignedTinyInteger('type'); //0 - not approved; 1 - approved;
-            $table->unsignedBigInteger('funds');
+            $table->unsignedBigInteger('amount');
+            $table->unsignedBigInteger('donator_id');
+            $table->dateTime('created_at');
+            $table->unsignedBigInteger('idea_id');
+            $table->foreign('idea_id')->references('id')->on('ideas');
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ideas');
+        //
     }
 };

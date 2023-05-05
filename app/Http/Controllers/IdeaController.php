@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Idea;
+use App\Models\Donation;
 use Illuminate\Http\Request;
 
 class IdeaController extends Controller
@@ -34,7 +35,8 @@ class IdeaController extends Controller
             'filter' => $filter,
             'perSelect' => Idea::PER,
             'per' => $per,
-            'page' => $page
+            'page' => $page,
+            'user' => $request->user()
         ]);
     }
 
@@ -48,6 +50,7 @@ class IdeaController extends Controller
         $idea = new Idea;
         $idea->title = $request->title;
         $idea->description = $request->description;
+        $idea->funds = $request->funds;
         $idea->type = 0;
         $idea->save();
         return redirect()
@@ -57,41 +60,57 @@ class IdeaController extends Controller
 
     public function show(Idea $idea)
     {
+        $donations = $idea->donations->sortByDesc('created_at'); //sort
         return view('back.ideas.show', [
-            'idea' => $idea
+            'idea' => $idea,
+            'donations' => $donations
         ]);
     }
 
     public function confirm(Idea $idea)
     {
-        dump($idea);
         $idea->type = 1;
-        // $idea->save();
-        // return redirect()
-        // ->route('ideas-index')
-        // ->with('ok', 'Idea '.$idea->id.' was confirmed');
+        $idea->save();
+        return redirect()
+        ->route('ideas-index')
+        ->with('ok', 'Idea '.$idea->id.' was confirmed');
     }
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(Idea $idea)
     {
-        //
+        return view('back.ideas.edit', [
+            'idea' => $idea
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Idea $idea)
     {
-        //
+        $idea->title = $request->title;
+        $idea->description = $request->description;
+        $idea->save();
+        return redirect()
+        ->route('ideas-index')
+        ->with('ok', 'The idea was updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    public function pledge(Request $request, Idea $idea)
+    {
+        $pledge = new Donation;
+        $pledge->amount= $request->amount;
+        $pledge->idea_id = $idea->id;
+        $pledge->donator_id = $request->donator_id;
+        $pledge->created_at = date("Y-m-d H:i:s");
+        $pledge->save();
+        return redirect()
+        ->route('ideas-index')
+        ->with('ok', 'Your pledge was accepted');
+    }
+
     public function destroy(Idea $idea)
     {
-        //
+        $idea->delete();
+        return redirect()
+        ->route('ideas-index')
+        ->with('info', 'The idea was deleted');
     }
 }

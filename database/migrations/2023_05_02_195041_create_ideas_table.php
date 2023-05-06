@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('funds');
             $table->json('tag_ids');
             $table->json('hearts');
+            $table->string('photo', 200)->nullable()->default(null);
         });
     }
 

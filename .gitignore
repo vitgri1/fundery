@@ -3,6 +3,7 @@
 /public/build
 /public/hot
 /public/storage
+/public/ideas-photo
 /storage/*.key
 /vendor
 .env

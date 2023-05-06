@@ -10,7 +10,7 @@
                     <h1>Suggest idea for approval</h1>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('ideas-store')}}" method="post">
+                    <form action="{{route('ideas-store')}}" method="post" enctype="multipart/form-data">
                         {{-- input for title of idea --}}
                         <div class="mb-3">
                             <label class="form-label">Title of the idea</label>
@@ -21,6 +21,7 @@
                             <label class="form-label">Description of the idea</label>
                             <textarea class="form-control" name="description" rows="4" cols="50"></textarea>
                         </div>
+                        {{-- funds for the idea --}}
                         <div class="mb-3">
                             <label class="form-label">Funds you are asking</label>
                             <input type="text" class="form-control" name="funds" value={{old('funds')}}>
@@ -35,6 +36,23 @@
                                 @endforeach
                             </select>
                         </div>
+{{-- kk --}}
+                        <div class="mb-3">
+                            <label class="form-label">Main Idea photo</label>
+                            <input type="file" class="form-control" name="photo">
+                        </div>
+
+                        <div class="mb-3" data-gallery="0">
+                            <label class="form-label">Gallery photo <span class="rem">X</span></label>
+                            <input type="file" class="form-control">
+                        </div>
+
+                        <div class="gallery-inputs">
+                        
+                        </div>
+
+                        <button type="button" class="btn btn-secondary --add--gallery">add gallery photo</button>
+{{-- kk end --}}
                         <button type="submit" class="btn btn-primary">Submit</button>
                         @csrf
                     </form>

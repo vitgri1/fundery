@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Idea;
 use App\Models\Donation;
 use App\Models\Tag;
+use App\Models\Photo;
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class IdeaController extends Controller
 {
@@ -55,6 +57,20 @@ class IdeaController extends Controller
         $idea->description = $request->description;
         $idea->funds = $request->funds;
         $idea->type = 0;
+        $idea->created_at = date("Y-m-d H:i:s");
+        $idea->tag_ids = [0 => $request->tags];
+        $idea->hearts = [];
+        $photo = $request->photo;
+        if ($photo) {
+            $name = $idea->savePhoto($photo);
+        }
+        $idea->photo = $name ?? null;
+        $id = $idea->id;
+
+        foreach ($request->gallery ?? [] as $gallery) {
+            Photo::add($gallery, $id);
+        }
+        
         $idea->save();
         return redirect()
         ->route('ideas-index')

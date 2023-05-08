@@ -53,25 +53,26 @@ class IdeaController extends Controller
     public function store(Request $request)
     {
         $idea = new Idea;
-        $idea->title = $request->title;
-        $idea->description = $request->description;
-        $idea->funds = $request->funds;
-        $idea->type = 0;
-        $idea->created_at = date("Y-m-d H:i:s");
-        $idea->tag_ids = [0 => $request->tags];
-        $idea->hearts = [];
         $photo = $request->photo;
         if ($photo) {
             $name = $idea->savePhoto($photo);
         }
-        $idea->photo = $name ?? null;
-        $id = $idea->id;
+
+        $id = Idea::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'funds' => $request->funds,
+            'type' => 0,
+            'created_at' => date("Y-m-d H:i:s"),
+            'photo' => $name ?? null,
+            'tag_ids' => [$request->tags],
+            'hearts' => [],
+        ])->id;
 
         foreach ($request->gallery ?? [] as $gallery) {
             Photo::add($gallery, $id);
         }
         
-        $idea->save();
         return redirect()
         ->route('ideas-index')
         ->with('ok', 'New idea was created');

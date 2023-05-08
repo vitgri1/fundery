@@ -52,10 +52,9 @@ class IdeaController extends Controller
 
     public function store(Request $request)
     {
-        $idea = new Idea;
         $photo = $request->photo;
         if ($photo) {
-            $name = $idea->savePhoto($photo);
+            $name = Idea::savePhoto($photo);
         }
 
         $id = Idea::create([

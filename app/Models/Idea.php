@@ -60,7 +60,7 @@ class Idea extends Model
         ]);
     }
 
-    public function savePhoto(UploadedFile $photo) : string
+    public static function savePhoto(UploadedFile $photo) : string
     {
         $name = $photo->getClientOriginalName();
         $name = rand(1000000, 9999999) . '-' . $name;

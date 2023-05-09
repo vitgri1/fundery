@@ -71,4 +71,9 @@ class Idea extends Model
         $img->save($path . 't_' . $name, 90);
         return $name;
     }
+
+    public function totalDonated() : float
+    {
+        return Donation::where('idea_id', '=', $this->id)->sum('amount');
+    }
 }

@@ -67,6 +67,9 @@
                                     <div>
                                         {{$idea->type}}
                                     </div>
+                                    <div>
+                                        {{$idea->totalDonated()}}
+                                    </div>
                                 </div>
                                 <div class="buttons">
                                     <a href="{{route('ideas-show', $idea)}}" class="btn btn-info">Show</a>

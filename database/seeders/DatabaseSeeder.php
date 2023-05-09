@@ -16,27 +16,32 @@ class DatabaseSeeder extends Seeder
             'name' => 'Jonas',
             'email' => 'jonas@gmail.com',
             'password' => Hash::make('abc123'),
+            'role' => 1,
         ]);
 
         DB::table('users')->insert([
             'name' => 'Jonas2',
             'email' => 'jonas2@gmail.com',
             'password' => Hash::make('abc123'),
+            'role' => 10,
         ]);
         DB::table('users')->insert([
             'name' => 'Jonas3',
             'email' => 'jonas3@gmail.com',
             'password' => Hash::make('abc123'),
+            'role' => 10,
         ]);
         DB::table('users')->insert([
             'name' => 'Jonas4',
             'email' => 'jonas4@gmail.com',
             'password' => Hash::make('abc123'),
+            'role' => 10,
         ]);
         DB::table('users')->insert([
             'name' => 'Jonas5',
             'email' => 'jonas5@gmail.com',
             'password' => Hash::make('abc123'),
+            'role' => 10,
         ]);
 
         $faker = Faker::create();

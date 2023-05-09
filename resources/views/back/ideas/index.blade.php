@@ -65,10 +65,23 @@
                                         {{$idea->title}}
                                     </div>
                                     <div>
-                                        {{$idea->type}}
+                                        @if ($idea->type == 1)
+                                        approved
+                                        @else
+                                        not approved
+                                        @endif
                                     </div>
                                     <div>
-                                        {{$idea->totalDonated()}}
+                                        Total amount needed: {{$idea->funds}} eur
+                                    </div>
+                                    <div>
+                                        Donated so far: {{$idea->totalDonated()}} eur
+                                    </div>
+                                    <div>
+                                        Needed to fulfill the goal: {{$idea->funds - $idea->totalDonated()}} eur
+                                    </div>
+                                    <div>
+                                        Hearts:  {{count($idea->hearts)}}
                                     </div>
                                 </div>
                                 <div class="buttons">

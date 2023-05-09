@@ -10,7 +10,7 @@
                     <h1>Edit Client</h1>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('ideas-update', $idea)}}" method="post">
+                    <form action="{{route('ideas-update', $idea)}}" method="post" enctype="multipart/form-data">
                         {{-- input for title of idea --}}
                         <div class="mb-3">
                             <label class="form-label">Title of idea</label>
@@ -21,6 +21,54 @@
                             <label class="form-label">Description of the idea</label>
                             <textarea class="form-control" name="description" rows="4" cols="50">{{ old('description', $idea->description) }}</textarea>
                         </div>
+
+                        {{-- funds for the idea --}}
+                        <div class="mb-3">
+                            <label class="form-label">Funds you are asking</label>
+                            <input type="text" class="form-control" name="funds" value={{old('funds', $idea->funds)}}>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">#hash-tags</label>
+                            <select class="form-select" name="tags">
+                                <option value="0">Hash-tags</option>
+                                @foreach($tags as $tag)
+                                <option value="{{$tag->id}}" @if($tag->id == old('tag_id',  $idea->tags[0] ?? null)) selected @endif>
+                                {{$tag->title}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        {{-- kk --}}
+                        <div class="mb-3">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-4">
+                                        @if($idea->photo)
+                                        <img src="{{asset('ideas-photo') .'/t_'. $idea->photo}}">
+                                        @else
+                                        <img src="{{asset('ideas-photo') .'/no.png'}}">
+                                        @endif
+                                    </div>
+                                    <div class="col-8">
+                                        <label class="form-label">Main Idea photo</label>
+                                        <input type="file" class="form-control" name="photo">
+                                        <button type="submit" name="delete" value="1" class="mt-2 btn btn-danger">Delete photo</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3" data-gallery="0">
+                            <label class="form-label">Gallery photo <span class="rem">X</span></label>
+                            <input type="file" class="form-control">
+                        </div>
+
+                        <div class="gallery-inputs">
+                        
+                        </div>
+
+                        <button type="button" class="btn btn-secondary --add--gallery">add gallery photo</button>
+{{-- kk end --}}
+
                         <button type="submit" class="btn btn-primary">Submit</button>
                         @csrf
                         @method('put')

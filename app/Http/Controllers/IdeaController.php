@@ -98,15 +98,40 @@ class IdeaController extends Controller
     public function edit(Idea $idea)
     {
         return view('back.ideas.edit', [
-            'idea' => $idea
+            'idea' => $idea,
+            'tags' => Tag::all()
         ]);
     }
 
     public function update(Request $request, Idea $idea)
     {
-        $idea->title = $request->title;
-        $idea->description = $request->description;
-        $idea->save();
+
+        if ($request->delete == 1) {
+            $idea->deletePhoto();
+            return redirect()->back();
+        }
+
+        $photo = $request->photo;
+
+        if ($photo) {
+            $name = Idea::savePhoto($photo);
+            $idea->deletePhoto();
+            $idea->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'photo' => $name
+            ]);
+        } else {
+            $idea->update([
+                'title' => $request->title,
+                'description' => $request->description,
+            ]);
+        }
+
+        foreach ($request->gallery ?? [] as $gallery) {
+            Photo::add($gallery, $idea->id);
+        }
+
         return redirect()
         ->route('ideas-index')
         ->with('ok', 'The idea was updated');
@@ -142,5 +167,11 @@ class IdeaController extends Controller
         return redirect()
         ->route('ideas-index')
         ->with('info', 'The idea was deleted');
+    }
+
+    public function destroyPhoto(Photo $photo)
+    {
+        $photo->deletePhoto();
+        return redirect()->back();
     }
 }

@@ -8,6 +8,7 @@
                 {{-- filter and sort --}}
                 <div class="card-header">
                     <h1>Ideas List</h1>
+                    <h1>REACT</h1>
                     <form action="{{route('ideas-index')}}" method="get">
                         <div class="container">
                             <div class="row">

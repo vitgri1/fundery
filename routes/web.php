@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IdeaController as I;
 use App\Http\Controllers\TagController as T;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,7 @@ use App\Http\Controllers\TagController as T;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return Inertia::render('Test');
 });
 
 Auth::routes();

@@ -8,9 +8,18 @@ use App\Models\Tag;
 use App\Models\Photo;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
+use Inertia\Inertia;
 
 class IdeaController extends Controller
 {
+
+    public function rct()
+    {
+        return Inertia::render('User/Show', [
+            'event' => 'description'
+        ]);
+    }
+
     public function index(Request $request)
     {
         $sort = $request->sort ?? '';

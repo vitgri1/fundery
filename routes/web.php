@@ -23,6 +23,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/rct', [I::class, 'rct'])->name('rct');
+
 Route::name('ideas-')->group(function () {
     Route::get('/list', [I::class, 'index'])->name('index')->middleware('role:admin|client');
     Route::get('/create', [I::class, 'create'])->name('create')->middleware('role:admin|client');

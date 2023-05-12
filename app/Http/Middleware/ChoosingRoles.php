@@ -9,10 +9,9 @@ use App\Models\User;
 
 class ChoosingRoles
 {
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, string $roles): Response
     {
-        return $next($request);
-
+        
         $user = $request->user();
         if (!$user) {
             return redirect()->route('login');
@@ -24,5 +23,7 @@ class ChoosingRoles
         if (!in_array($userRole, $roles)) {
             abort(401);
         }
+
+        return $next($request);
     }
 }

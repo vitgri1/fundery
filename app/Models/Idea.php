@@ -47,6 +47,11 @@ class Idea extends Model
         return $this->hasMany(Photo::class, 'idea_id', 'id');
     }
 
+    public function ideaTag()
+    {
+        return $this->hasMany(IdeaTag::class);
+    }
+
     public function deletePhoto()
     {
         if ($this->photo) {

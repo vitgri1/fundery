@@ -6,6 +6,7 @@ use App\Models\Idea;
 use App\Models\Donation;
 use App\Models\Tag;
 use App\Models\Photo;
+use App\Models\IdeaTag;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -30,6 +31,13 @@ class IdeaController extends Controller
 
         $ideas = $ideas->paginate($per)->withQueryString();
 
+        $ideas->map(function($i) {
+            // TAGS
+            $tagsId = $i->ideaTag->pluck('tag_id')->all();
+            $tags = Tag::whereIn('id', $tagsId)->get();
+            $i->tags = $tags;
+        });
+
         return view('back.ideas.index', [
             'ideas' => $ideas,
             'sortSelect' => Idea::SORT,
@@ -43,6 +51,132 @@ class IdeaController extends Controller
         ]);
     }
 
+    public function getTagsList(Request $request)
+    {
+        $tag = $request->t ?? '';
+
+        if ($tag) {
+            $tags = Tag::where('title', 'like', '%'.$tag.'%')
+            ->limit(5)
+            ->get();
+        } else {
+            $tags = [];
+        }
+        
+
+        $html = view('front.tag-search-list')->with(['tags' => $tags])->render();
+        
+        return response()->json([
+            'tags' => $html,
+        ]);
+    }
+
+    public function addNewTag(Request $request, Idea $idea)
+    {
+        $title = $request->tag ?? '';
+
+        if (strlen($title) < 3) {
+            return response()->json([
+                'message' => 'Invalid tag title',
+                'status' => 'error'
+            ]);
+        }
+
+        $tag = Tag::where('title', $title)->first();
+
+        if (!$tag) {
+
+            $tag = Tag::create([
+                'title' => $title
+            ]);
+        }
+
+        $tagsId = $idea->ideaTag->pluck('tag_id')->all();
+        
+        if (in_array($tag->id, $tagsId)) {
+            return response()->json([
+                'message' => 'Tag exists',
+                'status' => 'error'
+            ]);
+        }
+
+        IdeaTag::create([
+            'tag_id' => $tag->id,
+            'idea_id' => $idea->id
+        ]);
+
+        return response()->json([
+            'message' => 'Tag added',
+            'status' => 'ok',
+            'tag' => $tag->title,
+            'id' => $tag->id,
+        ]);
+
+    }
+
+    public function deleteTag(Request $request, Idea $idea)
+    {
+        $tagId = $request->tag ?? 0;
+
+        $tag = Tag::find($tagId);
+
+        if (!$tag) {
+            return response()->json([
+                'message' => 'Invalid tag id',
+                'status' => 'error'
+            ]);
+        }
+
+        $ideaTag = IdeaTag::where('idea_id', $idea->id)
+        ->where('tag_id', $tag->id)->first();
+
+        $ideaTag->delete();
+        return response()->json([
+            'message' => 'Tag removed',
+            'status' => 'ok',
+            'tag' => $tag->title,
+            'id' => $tag->id,
+        ]);
+
+
+    }
+
+    public function addTag(Request $request, Idea $idea)
+    {
+        $tagId = $request->tag ?? 0;
+
+        $tag = Tag::find($tagId);
+
+        if (!$tag) {
+            return response()->json([
+                'message' => 'Invalid tag id',
+                'status' => 'error'
+            ]);
+        }
+
+        $tagsId = $idea->ideaTag->pluck('tag_id')->all();
+        
+        if (in_array($tagId, $tagsId)) {
+            return response()->json([
+                'message' => 'Tag exists',
+                'status' => 'error'
+            ]);
+        }
+
+        IdeaTag::create([
+            'tag_id' => $tagId,
+            'idea_id' => $idea->id
+        ]);
+
+
+        return response()->json([
+            'message' => 'Tag added',
+            'status' => 'ok',
+            'tag' => $tag->title,
+            'id' => $tag->id,
+        ]);
+    }
+    
     public function create()
     {
         return view('back.ideas.create', [

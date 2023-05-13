@@ -21,6 +21,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// fff
+Route::name('front-')->group(function () {
+    Route::get('/tags-list', [I::class, 'getTagsList'])->name('tags-list')->middleware('role:admin|client');
+    Route::put('/add-tag/{idea}', [I::class, 'addTag'])->name('add-tag')->middleware('role:admin|client');
+    Route::put('/delete-tag/{idea}', [I::class, 'deleteTag'])->name('delete-tag')->middleware('role:admin|client');
+    Route::post('/add-new-tag/{idea}', [I::class, 'addNewTag'])->name('add-new-tag')->middleware('role:admin|client');
+});
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::name('ideas-')->group(function () {

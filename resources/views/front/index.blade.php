@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.front')
 
 @section('content')
 <div class="container">
@@ -59,8 +59,10 @@
                     <ul class="list-group">
                         @forelse($ideas as $idea)
                         <li class="list-group-item">
-                            <div class="dings-gal">
-                                @include('front.tags')
+                            <div class="tags">
+                                @foreach($idea->tags as $tag)
+                                <div class="tag">{{$tag->title}}</div>
+                                @endforeach
                             </div>
                             <div class="client-line">
                                 <div>
@@ -84,27 +86,22 @@
                                         Needed to fulfill the goal: {{$idea->funds - $idea->totalDonated()}} eur
                                     </div>
                                     <div>
-                                        Hearts:  {{count($idea->hearts)}}
+                                        Hearts:  {{$idea->likes()}}
                                     </div>
-                                </div>
-                                <div class="buttons">
-                                    <a href="{{route('ideas-show', $idea)}}" class="btn btn-info">Show</a>
-                                    <a href="{{route('ideas-edit', $idea)}}" class="btn btn-primary">Edit</a>
-                                    <form action="{{route('ideas-like', $idea)}}" method="post" class="mb-3">
-                                        <input type="hidden" name="heart_id" value="{{$user->id}}">
-                                        <button type="submit" class="btn btn-outline-warning">Like</button>
-                                        @csrf
-                                        @method('put')
-                                    </form>
-                                </div>
-                                <div>
-                                    <form action="{{route('ideas-pledge', $idea)}}" method="post" class="input-group mb-3">
-                                        <input class="form-control" type="text" name="amount">
-                                        <input type="hidden" name="donator_id" value="{{$user->id}}">
-                                        <button type="submit" class="btn btn-warning">Donate</button>
-                                        @csrf
-                                        @method('put')
-                                    </form>
+                                    <div>
+                                        Description:  {{$idea->description}}
+                                    </div>
+                                    <div>
+                                        @if ($idea->photo)
+                                        <img src="{{asset('ideas-photo') .'/t_'. $idea->photo}}">
+                                        @foreach ($idea->gallery as $photo)
+                                        <img src="{{asset('ideas-photo') .'/'. $photo->photo}}">                                     
+                                        @endforeach
+                                        @else
+                                        <img src="{{asset('ideas-photo') .'/no.png'}}">
+                                        @endif
+                                        
+                                    </div>
                                 </div>
                             </div>
                         </li>

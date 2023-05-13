@@ -188,7 +188,7 @@ class IdeaController extends Controller
     {
         $photo = $request->photo;
         if ($photo) {
-            $name = Idea::savePhoto($photo);
+            $name = Photo::add($photo);
         }
 
         $id = Idea::create([
@@ -248,7 +248,7 @@ class IdeaController extends Controller
         $photo = $request->photo;
 
         if ($photo) {
-            $name = Idea::savePhoto($photo);
+            $name = Photo::add($photo);
             $idea->deletePhoto();
             $idea->update([
                 'title' => $request->title,
@@ -267,7 +267,7 @@ class IdeaController extends Controller
         }
 
         return redirect()
-        ->route('ideas-index')
+        ->route('front-index')
         ->with('ok', 'The idea was updated');
     }
 
@@ -280,7 +280,7 @@ class IdeaController extends Controller
         $pledge->created_at = date("Y-m-d H:i:s");
         $pledge->save();
         return redirect()
-        ->route('ideas-index')
+        ->route('front-index')
         ->with('ok', 'Your pledge was accepted');
     }
 
@@ -303,9 +303,4 @@ class IdeaController extends Controller
         ->with('info', 'The idea was deleted');
     }
 
-    public function destroyPhoto(Photo $photo)
-    {
-        $photo->deletePhoto();
-        return redirect()->back();
-    }
 }

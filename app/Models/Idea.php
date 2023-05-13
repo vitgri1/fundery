@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\UploadedFile;
 
 class Idea extends Model
@@ -37,6 +36,11 @@ class Idea extends Model
         '100' => '100',
     ];
 
+    public function likes()
+    {
+        return count($this->hearts);
+    }
+
     public function donations()
     {
         return $this->hasMany(Donation::class);
@@ -63,18 +67,6 @@ class Idea extends Model
         $this->update([
             'photo' => null,
         ]);
-    }
-
-    public static function savePhoto(UploadedFile $photo) : string
-    {
-        $name = $photo->getClientOriginalName();
-        $name = rand(1000000, 9999999) . '-' . $name;
-        $path = public_path() . '/ideas-photo/';
-        $photo->move($path, $name);
-        $img = Image::make($path . $name);
-        $img->resize(200, 200);
-        $img->save($path . 't_' . $name, 90);
-        return $name;
     }
 
     public function totalDonated() : float

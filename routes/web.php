@@ -26,23 +26,26 @@ Auth::routes();
 Route::name('front-')->group(function () {
     Route::get('/home', [F::class, 'index'])->name('index');
     Route::get('/idea/{idea}', [F::class, 'show'])->name('show');
-    Route::put('/pledge/{idea}', [F::class, 'pledge'])->name('pledge')->middleware('role:admin|client');
-    Route::put('/like/{idea}', [F::class, 'like'])->name('like')->middleware('role:admin|client');
+    Route::get('/create', [I::class, 'create'])->name('create')->middleware('role:admin|client');
+    Route::post('/create', [I::class, 'store'])->name('store')->middleware('role:admin|client');
+    // I -> F
     Route::get('/tags-list', [I::class, 'getTagsList'])->name('tags-list')->middleware('role:admin|client');
     Route::put('/add-tag/{idea}', [I::class, 'addTag'])->name('add-tag')->middleware('role:admin|client');
     Route::put('/delete-tag/{idea}', [I::class, 'deleteTag'])->name('delete-tag')->middleware('role:admin|client');
     Route::post('/add-new-tag/{idea}', [I::class, 'addNewTag'])->name('add-new-tag')->middleware('role:admin|client');
+    // ^^^^^^
+    Route::put('/like/{idea}', [I::class, 'like'])->name('like')->middleware('role:admin|client');
+    Route::put('/pledge/{idea}', [I::class, 'pledge'])->name('pledge')->middleware('role:admin|client');
 });
 
-Route::name('ideas-')->group(function () {
+//  added admin \||/  <==
+Route::prefix('admin')->name('ideas-')->group(function () {
     Route::get('/list', [I::class, 'index'])->name('index')->middleware('role:admin|client');
     Route::get('/create', [I::class, 'create'])->name('create')->middleware('role:admin|client');
     Route::post('/create', [I::class, 'store'])->name('store')->middleware('role:admin|client');
     Route::get('/{idea}', [I::class, 'show'])->name('show')->middleware('role:admin|client');
     Route::get('/edit/{idea}', [I::class, 'edit'])->name('edit')->middleware('role:admin|client');
     Route::put('/edit/{idea}', [I::class, 'update'])->name('update')->middleware('role:admin|client');
-    // Route::put('/pledge/{idea}', [I::class, 'pledge'])->name('pledge')->middleware('role:admin|client');
-    // Route::put('/like/{idea}', [I::class, 'like'])->name('like')->middleware('role:admin|client');
     Route::get('/confirm/{idea}', [I::class, 'confirm'])->name('confirm')->middleware('role:admin|client');
     Route::delete('/delete/{idea}', [I::class, 'destroy'])->name('delete')->middleware('role:admin|client');
 });

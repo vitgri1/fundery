@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('description', 1000);
             $table->unsignedTinyInteger('type'); //0 - not approved; 1 - approved;
             $table->unsignedBigInteger('funds');
-            $table->json('tag_ids');
+            $table->json('tags');
             $table->json('hearts');
             $table->string('photo', 200)->nullable()->default(null);
         });

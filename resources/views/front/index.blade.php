@@ -8,7 +8,7 @@
                 {{-- filter and sort --}}
                 <div class="card-header">
                     <h1>Ideas List</h1>
-                    <form action="{{route('ideas-index')}}" method="get">
+                    <form action="{{route('front-index')}}" method="get">
                         <div class="container">
                             <div class="row">
                                 <div class="col-3">
@@ -47,7 +47,7 @@
                                 <div class="col-3">
                                     <div class="sort-filter-buttons">
                                         <button type="submit" class="btn btn-primary">Submit</button>
-                                        <a href="{{route('ideas-index')}}" class="btn btn-danger">Clear</a>
+                                        <a href="{{route('front-index')}}" class="btn btn-danger">Clear</a>
                                     </div>
                                 </div>
                             </div>
@@ -59,51 +59,39 @@
                     <ul class="list-group">
                         @forelse($ideas as $idea)
                         <li class="list-group-item">
-                            <div class="tags">
-                                @foreach($idea->tags as $tag)
-                                <div class="tag">{{$tag->title}}</div>
-                                @endforeach
-                            </div>
-                            <div class="client-line">
+                            <a href="{{route('front-show', $idea)}}">
                                 <div>
-                                    <div>
-                                        {{$idea->title}}
-                                    </div>
-                                    <div>
-                                        @if ($idea->type == 1)
-                                        approved
-                                        @else
-                                        not approved
-                                        @endif
-                                    </div>
-                                    <div>
-                                        Total amount needed: {{$idea->funds}} eur
-                                    </div>
-                                    <div>
-                                        Donated so far: {{$idea->totalDonated()}} eur
-                                    </div>
-                                    <div>
-                                        Needed to fulfill the goal: {{$idea->funds - $idea->totalDonated()}} eur
-                                    </div>
-                                    <div>
-                                        Hearts:  {{$idea->likes()}}
-                                    </div>
-                                    <div>
-                                        Description:  {{$idea->description}}
-                                    </div>
-                                    <div>
-                                        @if ($idea->photo)
-                                        <img src="{{asset('ideas-photo') .'/t_'. $idea->photo}}">
-                                        @foreach ($idea->gallery as $photo)
-                                        <img src="{{asset('ideas-photo') .'/'. $photo->photo}}">                                     
-                                        @endforeach
-                                        @else
-                                        <img src="{{asset('ideas-photo') .'/no.png'}}">
-                                        @endif
-                                        
-                                    </div>
+                                    {{$idea->title}}
                                 </div>
-                            </div>
+                                <div>
+                                    Hearts:  {{$idea->likes()}}
+                                </div>
+                                <div>
+                                    @if ($idea->photo)
+                                    <img src="{{asset('ideas-photo') .'/t_'. $idea->photo}}">
+                                    @else
+                                    <img src="{{asset('ideas-photo') .'/no.png'}}">
+                                    @endif
+                                </div>
+                                <div>
+                                    Total amount needed: {{$idea->funds}} eur
+                                </div>
+                                <div>
+                                    Donated so far: {{$idea->totalDonated()}} eur
+                                </div>
+                                <div>
+                                    Needed to fulfill the goal: {{$idea->funds - $idea->totalDonated()}} eur
+                                </div>
+                                <div>
+                                    Description:  {{$idea->description}}
+                                </div>
+
+                                <div class="tags">
+                                    @foreach($idea->tags as $tag)
+                                    <div class="tag">{{$tag->title}}</div>
+                                    @endforeach
+                                </div>
+                            </a>
                         </li>
                         @empty
                         <li class="list-group-item">

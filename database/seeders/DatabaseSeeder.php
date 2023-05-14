@@ -65,8 +65,7 @@ class DatabaseSeeder extends Seeder
                 'description' => $faker->text($maxNbChars = 200),
                 'type' => rand(0,1),
                 'funds' => rand(1,99999),
-                // 'tag_ids' => json_encode(array_map(fn($t)=>$t = rand(1,15), range(1,rand(1,6)))),
-                'tag_ids' => json_encode(uniqueTagsArray()),
+                'tags' => json_encode(uniqueTagsArray()),
                 'created_at' => $faker->dateTime,
                 'hearts' => json_encode([])
             ]);

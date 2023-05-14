@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.front')
 
 @section('content')
 <div class="container">
@@ -19,7 +19,7 @@
                         {{-- input for description of idea --}}
                         <div class="mb-3">
                             <label class="form-label">Description of the idea</label>
-                            <textarea class="form-control" name="description" rows="4" cols="50"></textarea>
+                            <textarea class="form-control" name="description" rows="4" cols="50">{{old('description')}}</textarea>
                         </div>
                         {{-- funds for the idea --}}
                         <div class="mb-3">
@@ -27,32 +27,32 @@
                             <input type="text" class="form-control" name="funds" value={{old('funds')}}>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">#hash-tags</label>
+                            {{-- @include('front.tags') --}}
+
+                            {{-- <label class="form-label">#hash-tags</label>
                             <select class="form-select" name="tags">
                                 <option value="0">Hash-tags</option>
                                 @foreach($tags as $tag)
                                 <option value="{{$tag->id}}" @if($tag->id == old('tag_id')) selected @endif>
                                 {{$tag->title}}</option>
                                 @endforeach
-                            </select>
+                            </select> --}}
                         </div>
-{{-- kk --}}
+                        {{-- Main photo --}}
                         <div class="mb-3">
                             <label class="form-label">Main Idea photo</label>
                             <input type="file" class="form-control" name="photo">
                         </div>
-
+                        {{-- Gallery --}}
                         <div class="mb-3" data-gallery="0">
                             <label class="form-label">Gallery photo <span class="rem">X</span></label>
                             <input type="file" class="form-control">
                         </div>
 
                         <div class="gallery-inputs">
-                        
                         </div>
 
                         <button type="button" class="btn btn-secondary --add--gallery">add gallery photo</button>
-{{-- kk end --}}
                         <button type="submit" class="btn btn-primary">Submit</button>
                         @csrf
                     </form>

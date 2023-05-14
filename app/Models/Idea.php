@@ -10,7 +10,7 @@ class Idea extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'type', 'funds', 'created_at', 'tag_ids', 'hearts', 'photo'];
+    protected $fillable = ['title', 'description', 'type', 'funds', 'created_at', 'tags', 'hearts', 'photo'];
     public $timestamps = false;
     protected $casts = [
         'tag_ids' => 'array',

@@ -9,6 +9,7 @@ use App\Models\Photo;
 use App\Models\IdeaTag;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Validator;
 
 class IdeaController extends Controller
 {
@@ -179,13 +180,27 @@ class IdeaController extends Controller
     
     public function create()
     {
-        return view('back.ideas.create', [
-            'tags' => Tag::all()
+        return view('front.create', [
         ]);
     }
 
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|min:3|max:100',
+            'description' => 'required|min:3|max:2000',
+            'funds' => 'required|numeric|decimal:0,2|gt:0',
+            'photo' => 'sometimes|required|image|max:10240',
+            'gallery.*' => 'sometimes|required|image|max:10240'
+        ]);
+
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()
+                ->back()
+                ->withErrors($validator);
+        }
+
         $photo = $request->photo;
         if ($photo) {
             $name = Photo::add($photo);
@@ -198,7 +213,7 @@ class IdeaController extends Controller
             'type' => 0,
             'created_at' => date("Y-m-d H:i:s"),
             'photo' => $name ?? null,
-            'tag_ids' => [$request->tags],
+            // 'tags' => [$request->tags],
             'hearts' => [],
         ])->id;
 
@@ -207,19 +222,11 @@ class IdeaController extends Controller
         }
         
         return redirect()
-        ->route('ideas-index')
+        ->route('front-index')
         ->with('ok', 'New idea was created');
     }
 
-    public function show(Idea $idea)
-    {
-        $donations = $idea->donations->sortByDesc('created_at'); //sort
-        return view('back.ideas.show', [
-            'idea' => $idea,
-            'donations' => $donations
-        ]);
-    }
-
+    //back for sure 
     public function confirm(Idea $idea)
     {
         $idea->type = 1;
@@ -273,6 +280,23 @@ class IdeaController extends Controller
 
     public function pledge(Request $request, Idea $idea)
     {
+        if ($request->donator_id == '0') {
+            return redirect()
+            ->route('login');
+        }
+
+        $validator = Validator::make($request->all(), [
+            'amount' => 'required|numeric|decimal:0,2|gt:0',
+            'donator_id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()
+                ->back()
+                ->withErrors($validator);
+        }
+
         $pledge = new Donation;
         $pledge->amount= $request->amount;
         $pledge->idea_id = $idea->id;
@@ -286,12 +310,27 @@ class IdeaController extends Controller
 
     public function like(Request $request, Idea $idea)
     {
+        if ($request->heart_id == '0') {
+            return redirect()
+            ->route('login');
+        }
+
+        $validator = Validator::make($request->all(), [
+            'heart_id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator);
+        }
+
         $hearts = $idea->hearts;
         $hearts[] = $request->heart_id;
         $idea->hearts = $hearts;
         $idea->save();
         return redirect()
-        ->route('ideas-index')
+        ->route('front-index')
         ->with('ok', 'Your like was saved');
     }
 
@@ -299,7 +338,7 @@ class IdeaController extends Controller
     {
         $idea->delete();
         return redirect()
-        ->route('ideas-index')
+        ->route('front-index')
         ->with('info', 'The idea was deleted');
     }
 

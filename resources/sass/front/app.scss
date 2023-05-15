@@ -32,3 +32,13 @@ span.rem {
         }
     }
 }
+
+//modal
+.modal {
+    display: none;
+    background-color: rgba(95, 158, 160, 0.5);
+}
+.clickable-disabled {
+    pointer-events: all !important;
+    cursor: not-allowed;
+}

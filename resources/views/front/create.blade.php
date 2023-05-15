@@ -53,7 +53,11 @@
                         </div>
 
                         <button type="button" class="btn btn-secondary --add--gallery">add gallery photo</button>
+                        @if(isset($user))
                         <button type="submit" class="btn btn-primary">Submit</button>
+                        @else
+                        <div class="btn btn-primary disabled clickable-disabled --submit--btn">Submit</div>
+                        @endif
                         @csrf
                     </form>
                 </div>
@@ -61,4 +65,6 @@
         </div>
     </div>
 </div>
+{{-- login modal --}}
+@include('front.modal-login')
 @endsection

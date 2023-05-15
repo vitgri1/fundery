@@ -95,3 +95,17 @@ if (document.querySelector('.--tags')) {
                 })
         });
 }
+
+//login modal display
+if(document.querySelector('.--modal') && document.querySelector('.--submit--btn') && document.querySelector('button.btn-close[data-bs-dismiss]')){
+    const modal = document.querySelector('.--modal');
+    const submitBtn = document.querySelector('.--submit--btn');
+    const close = document.querySelector('button.btn-close[data-bs-dismiss]');
+    console.log(submitBtn);
+    submitBtn.addEventListener('click', _=> {
+        modal.style.display = 'block';
+    });
+    close.addEventListener('click', _=> {
+        modal.style.display = null;
+    });
+}

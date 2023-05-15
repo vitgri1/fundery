@@ -190,7 +190,6 @@ class IdeaController extends Controller
             'type' => 0,
             'created_at' => date("Y-m-d H:i:s"),
             'photo' => $name ?? null,
-            'tags' => $tags,
             'hearts' => [],
         ])->id;
 
@@ -204,7 +203,7 @@ class IdeaController extends Controller
         {
             IdeaTag::create([
                 'tag_id' => $tagId,
-                'Idea_id' => $id
+                'idea_id' => $id
             ]);
         }
         

@@ -25,21 +25,24 @@ if (document.querySelector('.--tags')) {
     const initRemoveTag = tag => {
         tag.addEventListener('click', _ => {
             const tagInput = document.querySelector(
-                `input.--tag--input[value="${tag.parentNode.textContent}"]`);
+                `input.--tag--input[value="${tag.parentNode.textContent}"]`
+                );
             tagInput.remove();
             tag.parentNode.remove();
-            
         });
     }
 
     // insert tag into list
     const insertTag = res => {
-        const div = document.createElement('div');
         const tagList = document.querySelector('.--idea--tags');
         const tagInputsLits = document.querySelector('.--tags--inputs');
+        const tagInput = document.querySelector('.--add--new');
+        const listBox = document.querySelector('.--tags--list');
+        tagInput.value = '';
+        listBox.style.display = null;
+        const div = document.createElement('div');
         div.classList.add('tag');
-        div.dataset.id = res.data.id;
-        const title = document.createTextNode(res.data.tag);
+        const title = document.createTextNode(res);
         div.appendChild(title);
         const i = document.createElement('i');
         div.appendChild(i);
@@ -48,7 +51,7 @@ if (document.querySelector('.--tags')) {
         input.name = 'tags[]';
         input.classList.add('--tag--input');
         input.type = 'hidden';
-        input.value = res.data.tag;
+        input.value = res;
         tagInputsLits.appendChild(input);
         initRemoveTag(i);
     }
@@ -60,6 +63,7 @@ if (document.querySelector('.--tags')) {
                 .then(res => {
                     const b = document.querySelector('.--tags--list');
                     // show list of found tags
+                    b.style.display = 'block';
                     b.innerHTML = res.data.tags;
 
                     //add tags from search to list
@@ -68,7 +72,7 @@ if (document.querySelector('.--tags')) {
                         t.addEventListener('click', _ => {
                             axios.put(b.dataset.url, { tag: t.dataset.id })
                                 .then(res => {
-                                    insertTag(res);
+                                    insertTag(res.data.tag);
                                 })
                         });
                     });
@@ -83,7 +87,7 @@ if (document.querySelector('.--tags')) {
             axios.post(b.dataset.url, { tag: i.value })
                 .then(res => {
                     if (res.data.status == 'ok') {
-                        insertTag(res);
+                        insertTag(res.data.tag);
                     } else {
                         // FOR FUN do not keep this else statement
                         document.querySelector('.--idea--tags').innerHTML = '<div style="color: red;">AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</div>';

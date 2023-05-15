@@ -87,7 +87,6 @@ class IdeaController extends Controller
             'message' => 'Tag added',
             'status' => 'ok',
             'tag' => $title,
-            'id' => 0,
         ]);
 
     }
@@ -136,7 +135,6 @@ class IdeaController extends Controller
             'message' => 'Tag added',
             'status' => 'ok',
             'tag' => $tag->title,
-            'id' => $tag->id,
         ]);
     }
     
@@ -153,7 +151,8 @@ class IdeaController extends Controller
             'description' => 'required|min:3|max:2000',
             'funds' => 'required|numeric|decimal:0,2|gt:0',
             'photo' => 'sometimes|required|image|max:10240',
-            'gallery.*' => 'sometimes|required|image|max:10240'
+            'gallery.*' => 'sometimes|required|image|max:10240',
+            'tags' => 'required|array',
         ]);
 
         if ($validator->fails()) {
@@ -163,9 +162,25 @@ class IdeaController extends Controller
                 ->withErrors($validator);
         }
 
+        // main photo
         $photo = $request->photo;
         if ($photo) {
             $name = Photo::add($photo);
+        }
+
+        // tags
+        $tags = [];
+        foreach($request->tags as $tag)
+        {
+            $id = Tag::where('title', $tag)->value('id');
+
+            if(!$id) {
+                $tag = Tag::create([
+                    'title' => $tag
+                ])->id;
+            }
+
+            $tags[] = $id;
         }
 
         $id = Idea::create([
@@ -175,7 +190,7 @@ class IdeaController extends Controller
             'type' => 0,
             'created_at' => date("Y-m-d H:i:s"),
             'photo' => $name ?? null,
-            // 'tags' => [$request->tags],
+            'tags' => $tags,
             'hearts' => [],
         ])->id;
 

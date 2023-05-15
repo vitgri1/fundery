@@ -194,8 +194,18 @@ class IdeaController extends Controller
             'hearts' => [],
         ])->id;
 
+        // gallery
         foreach ($request->gallery ?? [] as $gallery) {
             Photo::add($gallery, $id);
+        }
+
+        // tags pivot
+        foreach($tags as $tagId)
+        {
+            IdeaTag::create([
+                'tag_id' => $tagId,
+                'Idea_id' => $id
+            ]);
         }
         
         return redirect()

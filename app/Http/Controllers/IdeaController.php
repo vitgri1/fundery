@@ -72,7 +72,7 @@ class IdeaController extends Controller
         ]);
     }
 
-    public function addNewTag(Request $request, Idea $idea)
+    public function addNewTag(Request $request)
     {
         $title = $request->tag ?? '';
 
@@ -82,35 +82,12 @@ class IdeaController extends Controller
                 'status' => 'error'
             ]);
         }
-
-        $tag = Tag::where('title', $title)->first();
-
-        if (!$tag) {
-
-            $tag = Tag::create([
-                'title' => $title
-            ]);
-        }
-
-        $tagsId = $idea->ideaTag->pluck('tag_id')->all();
-        
-        if (in_array($tag->id, $tagsId)) {
-            return response()->json([
-                'message' => 'Tag exists',
-                'status' => 'error'
-            ]);
-        }
-
-        IdeaTag::create([
-            'tag_id' => $tag->id,
-            'idea_id' => $idea->id
-        ]);
-
+       
         return response()->json([
             'message' => 'Tag added',
             'status' => 'ok',
-            'tag' => $tag->title,
-            'id' => $tag->id,
+            'tag' => $title,
+            'id' => 0,
         ]);
 
     }
@@ -142,7 +119,7 @@ class IdeaController extends Controller
 
     }
 
-    public function addTag(Request $request, Idea $idea)
+    public function addTag(Request $request)
     {
         $tagId = $request->tag ?? 0;
 
@@ -154,21 +131,6 @@ class IdeaController extends Controller
                 'status' => 'error'
             ]);
         }
-
-        $tagsId = $idea->ideaTag->pluck('tag_id')->all();
-        
-        if (in_array($tagId, $tagsId)) {
-            return response()->json([
-                'message' => 'Tag exists',
-                'status' => 'error'
-            ]);
-        }
-
-        IdeaTag::create([
-            'tag_id' => $tagId,
-            'idea_id' => $idea->id
-        ]);
-
 
         return response()->json([
             'message' => 'Tag added',

@@ -27,7 +27,7 @@
                             <input type="text" class="form-control" name="funds" value={{old('funds')}}>
                         </div>
                         <div class="mb-3">
-                            {{-- @include('front.tags') --}}
+                            @include('front.tags')
 
                             {{-- <label class="form-label">#hash-tags</label>
                             <select class="form-select" name="tags">

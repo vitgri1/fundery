@@ -26,13 +26,13 @@ Auth::routes();
 Route::name('front-')->group(function () {
     Route::get('/home', [F::class, 'index'])->name('index');
     Route::get('/idea/{idea}', [F::class, 'show'])->name('show');
-    Route::get('/create', [I::class, 'create'])->name('create')->middleware('role:admin|client');
+    Route::get('/create', [I::class, 'create'])->name('create');
     Route::post('/create', [I::class, 'store'])->name('store')->middleware('role:admin|client');
     // I -> F
-    Route::get('/tags-list', [I::class, 'getTagsList'])->name('tags-list')->middleware('role:admin|client');
-    Route::put('/add-tag/{idea}', [I::class, 'addTag'])->name('add-tag')->middleware('role:admin|client');
-    Route::put('/delete-tag/{idea}', [I::class, 'deleteTag'])->name('delete-tag')->middleware('role:admin|client');
-    Route::post('/add-new-tag/{idea}', [I::class, 'addNewTag'])->name('add-new-tag')->middleware('role:admin|client');
+    Route::get('/tags-list', [I::class, 'getTagsList'])->name('tags-list');
+    Route::put('/add-tag', [I::class, 'addTag'])->name('add-tag');
+    Route::put('/delete-tag', [I::class, 'deleteTag'])->name('delete-tag');
+    Route::post('/add-new-tag', [I::class, 'addNewTag'])->name('add-new-tag');
     // ^^^^^^
     Route::put('/like/{idea}', [I::class, 'like'])->name('like')->middleware('role:admin|client');
     Route::put('/pledge/{idea}', [I::class, 'pledge'])->name('pledge')->middleware('role:admin|client');

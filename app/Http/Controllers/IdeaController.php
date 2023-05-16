@@ -138,9 +138,10 @@ class IdeaController extends Controller
         ]);
     }
     
-    public function create()
+    public function create(Request $request)
     {
         return view('front.create', [
+            'user' => $request->user()
         ]);
     }
 
@@ -175,7 +176,7 @@ class IdeaController extends Controller
             $id = Tag::where('title', $tag)->value('id');
 
             if(!$id) {
-                $tag = Tag::create([
+                $id = Tag::create([
                     'title' => $tag
                 ])->id;
             }

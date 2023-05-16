@@ -28,12 +28,12 @@ Route::name('front-')->group(function () {
     Route::get('/idea/{idea}', [F::class, 'show'])->name('show');
     Route::get('/create', [I::class, 'create'])->name('create');
     Route::post('/create', [I::class, 'store'])->name('store')->middleware('role:admin|client');
-    // I -> F
     Route::get('/tags-list', [I::class, 'getTagsList'])->name('tags-list');
     Route::put('/add-tag', [I::class, 'addTag'])->name('add-tag');
+    // cia 
     Route::put('/delete-tag', [I::class, 'deleteTag'])->name('delete-tag');
+        // ^^^^^^
     Route::post('/add-new-tag', [I::class, 'addNewTag'])->name('add-new-tag');
-    // ^^^^^^
     Route::put('/like/{idea}', [I::class, 'like'])->name('like')->middleware('role:admin|client');
     Route::put('/pledge/{idea}', [I::class, 'pledge'])->name('pledge')->middleware('role:admin|client');
 });

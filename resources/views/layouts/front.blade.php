@@ -35,6 +35,13 @@
                                 Suggest an idea
                             </a>
                         </li>
+                        @if (Auth::user())
+                        <li class="nav-item nav-link">
+                            <a class="dropdown-item" href="{{ route('front-edit')}}">
+                                Edit your idea
+                            </a>
+                        </li>
+                        @endif   
                     </ul>
 
                     <!-- Right Side Of Navbar -->

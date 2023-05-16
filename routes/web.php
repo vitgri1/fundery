@@ -16,11 +16,9 @@ use App\Http\Controllers\FrontController as F;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
+
+Route::redirect('/','/home');
 
 // fff
 Route::name('front-')->group(function () {
@@ -28,6 +26,8 @@ Route::name('front-')->group(function () {
     Route::get('/idea/{idea}', [F::class, 'show'])->name('show');
     Route::get('/create', [I::class, 'create'])->name('create');
     Route::post('/create', [I::class, 'store'])->name('store')->middleware('role:admin|client');
+    Route::get('/edit', [I::class, 'edit'])->name('edit')->middleware('role:admin|client');
+    Route::put('/edit', [I::class, 'update'])->name('update')->middleware('role:admin|client');
     Route::get('/tags-list', [I::class, 'getTagsList'])->name('tags-list');
     Route::put('/add-tag', [I::class, 'addTag'])->name('add-tag');
     // cia 
@@ -39,13 +39,11 @@ Route::name('front-')->group(function () {
 });
 
 //  added admin \||/  <==
-Route::prefix('admin')->name('ideas-')->group(function () {
-    Route::get('/list', [I::class, 'index'])->name('index')->middleware('role:admin|client');
-    Route::get('/create', [I::class, 'create'])->name('create')->middleware('role:admin|client');
-    Route::post('/create', [I::class, 'store'])->name('store')->middleware('role:admin|client');
-    Route::get('/{idea}', [I::class, 'show'])->name('show')->middleware('role:admin|client');
-    Route::get('/edit/{idea}', [I::class, 'edit'])->name('edit')->middleware('role:admin|client');
-    Route::put('/edit/{idea}', [I::class, 'update'])->name('update')->middleware('role:admin|client');
+Route::prefix('admin')->name('admin-')->group(function () {
+    Route::get('/list', [I::class, 'index'])->name('index')->middleware('role:admin');
+
+    Route::get('/{idea}', [I::class, 'show'])->name('show')->middleware('role:admin');
+
     Route::get('/confirm/{idea}', [I::class, 'confirm'])->name('confirm')->middleware('role:admin|client');
     Route::delete('/delete/{idea}', [I::class, 'destroy'])->name('delete')->middleware('role:admin|client');
 });

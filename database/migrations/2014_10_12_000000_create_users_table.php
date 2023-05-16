@@ -20,6 +20,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->unsignedTinyInteger('role')->default(10);
+            $table->unsignedBigInteger('idea_id')->default(0);
         });
     }
 

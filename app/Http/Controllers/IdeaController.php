@@ -213,21 +213,45 @@ class IdeaController extends Controller
         ->with('ok', 'New idea was created');
     }
 
-    //back for sure 
+    //back for sure
     public function confirm(Idea $idea)
     {
         $idea->type = 1;
         $idea->save();
         return redirect()
-        ->route('ideas-index')
-        ->with('ok', 'Idea '.$idea->id.' was confirmed');
+        ->route('admin-index')
+        ->with('ok', 'Idea '.$idea->id.' was approved');
     }
 
-    public function edit(Idea $idea)
+    public function show(Request $request, Idea $idea)
     {
-        return view('back.ideas.edit', [
+        $donations = $idea->donations->sortByDesc('created_at'); //sort
+
+        // TAGS
+        $tagsId = $idea->ideaTag->pluck('tag_id')->all();
+        $tags = Tag::whereIn('id', $tagsId)->get();
+        $idea->tags = $tags;
+
+        return view('back.ideas.show', [
             'idea' => $idea,
-            'tags' => Tag::all()
+            'user' => $request->user(),
+            'donations' => $donations
+        ]);
+    }
+
+    public function edit(Request $request)
+    {
+        if ($request->user()->idea_id == '0') {
+            return redirect()
+            ->route('front-create')
+            ->with('info', 'Create idea first');
+        }
+        $idea = Idea::where('id', $request->user()->idea_id)->first();
+        $tags = $idea->ideaTag()->pluck('tag_id');
+        $tags = Tag::whereIn('id', $tags)->get();
+        return view('front.edit', [
+            'idea'=> $idea,
+            'tags'=> $tags,
         ]);
     }
 
@@ -325,7 +349,7 @@ class IdeaController extends Controller
     {
         $idea->delete();
         return redirect()
-        ->route('front-index')
+        ->route('admin-index')
         ->with('info', 'The idea was deleted');
     }
 

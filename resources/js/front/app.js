@@ -94,6 +94,15 @@ if (document.querySelector('.--tags')) {
                     }
                 })
         });
+
+    // edit tags page listeners
+    if (document.querySelector('.--edit--tags')) {
+        const tags = document.querySelectorAll('.--tag');
+        tags.forEach(t => {
+            const i = t.querySelector('i');
+            initRemoveTag(i);
+        });
+    }
 }
 
 //login modal display

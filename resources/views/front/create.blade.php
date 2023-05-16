@@ -10,7 +10,7 @@
                     <h1>Suggest idea for approval</h1>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('ideas-store')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('front-store')}}" method="post" enctype="multipart/form-data">
                         {{-- input for title of idea --}}
                         <div class="mb-3">
                             <label class="form-label">Title of the idea</label>
@@ -28,15 +28,6 @@
                         </div>
                         <div class="mb-3">
                             @include('front.tags')
-
-                            {{-- <label class="form-label">#hash-tags</label>
-                            <select class="form-select" name="tags">
-                                <option value="0">Hash-tags</option>
-                                @foreach($tags as $tag)
-                                <option value="{{$tag->id}}" @if($tag->id == old('tag_id')) selected @endif>
-                                {{$tag->title}}</option>
-                                @endforeach
-                            </select> --}}
                         </div>
                         {{-- Main photo --}}
                         <div class="mb-3">

@@ -8,7 +8,7 @@
                 {{-- filter and sort --}}
                 <div class="card-header">
                     <h1>Ideas List</h1>
-                    <form action="{{route('ideas-index')}}" method="get">
+                    <form action="{{route('admin-index')}}" method="get">
                         <div class="container">
                             <div class="row">
                                 <div class="col-3">
@@ -47,7 +47,7 @@
                                 <div class="col-3">
                                     <div class="sort-filter-buttons">
                                         <button type="submit" class="btn btn-primary">Submit</button>
-                                        <a href="{{route('ideas-index')}}" class="btn btn-danger">Clear</a>
+                                        <a href="{{route('admin-index')}}" class="btn btn-danger">Clear</a>
                                     </div>
                                 </div>
                             </div>
@@ -88,23 +88,8 @@
                                     </div>
                                 </div>
                                 <div class="buttons">
-                                    <a href="{{route('ideas-show', $idea)}}" class="btn btn-info">Show</a>
-                                    <a href="{{route('ideas-edit', $idea)}}" class="btn btn-primary">Edit</a>
-                                    <form action="{{route('ideas-like', $idea)}}" method="post" class="mb-3">
-                                        <input type="hidden" name="heart_id" value="{{$user->id}}">
-                                        <button type="submit" class="btn btn-outline-warning">Like</button>
-                                        @csrf
-                                        @method('put')
-                                    </form>
-                                </div>
-                                <div>
-                                    <form action="{{route('ideas-pledge', $idea)}}" method="post" class="input-group mb-3">
-                                        <input class="form-control" type="text" name="amount">
-                                        <input type="hidden" name="donator_id" value="{{$user->id}}">
-                                        <button type="submit" class="btn btn-warning">Donate</button>
-                                        @csrf
-                                        @method('put')
-                                    </form>
+                                    <a href="{{route('admin-show', $idea)}}" class="btn btn-info">Show</a>
+                                    <a href="{{route('admin-edit', $idea)}}" class="btn btn-primary">Edit</a>
                                 </div>
                             </div>
                         </li>

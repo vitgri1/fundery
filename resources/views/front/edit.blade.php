@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.front')
 
 @section('content')
 <div class="container">
@@ -7,13 +7,13 @@
             <div class="card mt-5">
                 {{-- title --}}
                 <div class="card-header">
-                    <h1>Edit Client</h1>
+                    <h1>Edit Idea</h1>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('ideas-update', $idea)}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('front-update')}}" method="post" enctype="multipart/form-data">
                         {{-- input for title of idea --}}
                         <div class="mb-3">
-                            <label class="form-label">Title of idea</label>
+                            <label class="form-label">Title of the idea</label>
                             <input type="text" class="form-control" name="title" value="{{ old('title', $idea->title) }}">
                         </div>
                         {{-- input for description of idea --}}
@@ -27,17 +27,11 @@
                             <label class="form-label">Funds you are asking</label>
                             <input type="text" class="form-control" name="funds" value={{old('funds', $idea->funds)}}>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">#hash-tags</label>
-                            <select class="form-select" name="tags">
-                                <option value="0">Hash-tags</option>
-                                @foreach($tags as $tag)
-                                <option value="{{$tag->id}}" @if($tag->id == old('tag_id',  $idea->tags[0] ?? null)) selected @endif>
-                                {{$tag->title}}</option>
-                                @endforeach
-                            </select>
+                        {{-- tags --}}
+                        <div class="mb-3 --edit--tags">
+                            @include('front.tags')
                         </div>
-                        {{-- kk --}}
+                        {{-- photos --}}
                         <div class="mb-3">
                             <div class="container">
                                 <div class="row">
@@ -67,8 +61,7 @@
                         </div>
 
                         <button type="button" class="btn btn-secondary --add--gallery">add gallery photo</button>
-{{-- kk end --}}
-
+                        {{-- Submit form --}}
                         <button type="submit" class="btn btn-primary">Submit</button>
                         @csrf
                         @method('put')

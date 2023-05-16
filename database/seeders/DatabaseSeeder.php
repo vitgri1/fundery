@@ -78,5 +78,12 @@ class DatabaseSeeder extends Seeder
                 'idea_id' => rand(1,15),
             ]);
         }
+
+        foreach(range(1, 50) as $_) {
+            DB::table('idea_tags')->insert([
+                'tag_id' => rand(1,15),
+                'idea_id' => rand(1,15),
+            ]);
+        }
     }
 }

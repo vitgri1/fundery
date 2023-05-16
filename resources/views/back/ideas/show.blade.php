@@ -44,8 +44,8 @@
                     </div>
                     {{-- buttons --}}
                     <div class="buttons">
-                        <a href="{{route('ideas-confirm', $idea)}}" class="btn btn-success">Confirm</a>
-                        <form action="{{route('ideas-delete', $idea)}}" method="post">
+                        <a href="{{route('admin-confirm', $idea)}}" class="btn btn-success">Confirm</a>
+                        <form action="{{route('admin-delete', $idea)}}" method="post">
                             <button type="submit" class="btn btn-danger">Delete</button>
                             @csrf
                             @method('delete')

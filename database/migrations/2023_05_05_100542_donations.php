@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('donator_id');
             $table->dateTime('created_at');
             $table->unsignedBigInteger('idea_id');
-            $table->foreign('idea_id')->references('id')->on('ideas');
+            $table->foreign('idea_id')->references('id')->on('ideas')->onDelete('cascade');
         });
     }
 

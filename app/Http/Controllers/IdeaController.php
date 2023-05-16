@@ -173,15 +173,15 @@ class IdeaController extends Controller
         $tags = [];
         foreach($request->tags as $tag)
         {
-            $id = Tag::where('title', $tag)->value('id');
+            $tagId = Tag::where('title', $tag)->value('id');
 
-            if(!$id) {
-                $id = Tag::create([
+            if(!$tagId) {
+                $tagId = Tag::create([
                     'title' => $tag
                 ])->id;
             }
 
-            $tags[] = $id;
+            $tags[] = $tagId;
         }
 
         $id = Idea::create([
@@ -258,6 +258,22 @@ class IdeaController extends Controller
     public function update(Request $request, Idea $idea)
     {
 
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|min:3|max:100',
+            'description' => 'required|min:3|max:2000',
+            'funds' => 'required|numeric|decimal:0,2|gt:0',
+            'photo' => 'sometimes|required|image|max:10240',
+            'gallery.*' => 'sometimes|required|image|max:10240',
+            'tags' => 'required|array',
+        ]);
+
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()
+                ->back()
+                ->withErrors($validator);
+        }
+
         if ($request->delete == 1) {
             $idea->deletePhoto();
             return redirect()->back();
@@ -271,6 +287,7 @@ class IdeaController extends Controller
             $idea->update([
                 'title' => $request->title,
                 'description' => $request->description,
+                'funds' => $request->funds,
                 'photo' => $name
             ]);
         } else {
@@ -280,6 +297,35 @@ class IdeaController extends Controller
             ]);
         }
 
+        // old tags delete
+        $oldTags = IdeaTag::where('idea_id', $idea->id)->get();
+        foreach($oldTags as $oldTag) {
+            $oldTag->delete();
+        }
+        // new tags
+        $tags = [];
+        foreach($request->tags as $tag)
+        {
+            $tagId = Tag::where('title', $tag)->value('id');
+
+            if(!$tagId) {
+                $tagId = Tag::create([
+                    'title' => $tag
+                ])->id;
+            }
+
+            $tags[] = $tagId;
+        }
+        // tags pivot
+        foreach($tags as $tagId)
+        {
+            IdeaTag::create([
+                'tag_id' => $tagId,
+                'idea_id' => $idea->id
+            ]);
+        }
+
+        //gallery
         foreach ($request->gallery ?? [] as $gallery) {
             Photo::add($gallery, $idea->id);
         }

@@ -10,7 +10,7 @@
                     <h1>Edit Idea</h1>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('front-update')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('front-update', $idea)}}" method="post" enctype="multipart/form-data">
                         {{-- input for title of idea --}}
                         <div class="mb-3">
                             <label class="form-label">Title of the idea</label>

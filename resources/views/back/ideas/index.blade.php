@@ -59,21 +59,16 @@
                     <ul class="list-group">
                         @forelse($ideas as $idea)
                         <li class="list-group-item">
-                            <div class="dings-gal">
-                                @include('front.tags')
-                            </div>
                             <div class="client-line">
                                 <div>
                                     <div>
                                         {{$idea->title}}
                                     </div>
-                                    <div>
-                                        @if ($idea->type == 1)
-                                        approved
-                                        @else
-                                        not approved
-                                        @endif
-                                    </div>
+                                    @if ($idea->type == 1)
+                                    <div style="color:aqua;">approved</div>
+                                    @else
+                                    <div style="color:red;">not approved</div>
+                                    @endif
                                     <div>
                                         Total amount needed: {{$idea->funds}} eur
                                     </div>
@@ -84,12 +79,12 @@
                                         Needed to fulfill the goal: {{$idea->funds - $idea->totalDonated()}} eur
                                     </div>
                                     <div>
-                                        Hearts:  {{count($idea->hearts)}}
+                                        Hearts: {{count($idea->hearts)}}
                                     </div>
                                 </div>
                                 <div class="buttons">
                                     <a href="{{route('admin-show', $idea)}}" class="btn btn-info">Show</a>
-                                    <a href="{{route('admin-edit', $idea)}}" class="btn btn-primary">Edit</a>
+                                    <a href="{{route('admin-confirm', $idea)}}" class="btn btn-success">Confirm</a>
                                 </div>
                             </div>
                         </li>

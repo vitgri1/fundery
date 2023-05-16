@@ -27,7 +27,7 @@ Route::name('front-')->group(function () {
     Route::get('/create', [I::class, 'create'])->name('create');
     Route::post('/create', [I::class, 'store'])->name('store')->middleware('role:admin|client');
     Route::get('/edit', [I::class, 'edit'])->name('edit')->middleware('role:admin|client');
-    Route::put('/edit', [I::class, 'update'])->name('update')->middleware('role:admin|client');
+    Route::put('/edit/{idea}', [I::class, 'update'])->name('update')->middleware('role:admin|client');
     Route::get('/tags-list', [I::class, 'getTagsList'])->name('tags-list');
     Route::put('/add-tag', [I::class, 'addTag'])->name('add-tag');
     // cia 

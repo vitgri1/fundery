@@ -46,16 +46,13 @@
                         </div>
                         {{-- Gallery --}}
                         <div class="gallery section">
-                            <div>
+                            <a href="{{route('front-gallery', $idea)}}" class="btn btn-dark">
                                 @if ($idea->photo)
                                 <img src="{{asset('ideas-photo') .'/t_'. $idea->photo}}">
-                                @foreach ($idea->gallery as $photo)
-                                <img src="{{asset('ideas-photo') .'/'. $photo->photo}}">                                     
-                                @endforeach
                                 @else
                                 <img src="{{asset('ideas-photo') .'/no.png'}}">
                                 @endif
-                            </div>
+                            </a>
                         </div>
                         {{-- Funds --}}
                         <div class="funds-section">

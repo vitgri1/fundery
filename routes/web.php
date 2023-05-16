@@ -36,6 +36,7 @@ Route::name('front-')->group(function () {
     Route::post('/add-new-tag', [I::class, 'addNewTag'])->name('add-new-tag');
     Route::put('/like/{idea}', [I::class, 'like'])->name('like')->middleware('role:admin|client');
     Route::put('/pledge/{idea}', [I::class, 'pledge'])->name('pledge')->middleware('role:admin|client');
+    Route::get('/idea-gallery/{idea}', [I::class, 'gallery'])->name('gallery');
 });
 
 //  added admin \||/  <==

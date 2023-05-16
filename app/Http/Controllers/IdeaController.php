@@ -207,6 +207,10 @@ class IdeaController extends Controller
                 'idea_id' => $id
             ]);
         }
+        //user
+        $request->user()->update([
+            'idea_id' => $id
+        ]);
         
         return redirect()
         ->route('front-index')
@@ -389,6 +393,14 @@ class IdeaController extends Controller
         return redirect()
         ->route('front-index')
         ->with('ok', 'Your like was saved');
+    }
+
+    public function gallery(Idea $idea)
+    {
+        return view('front.gallery', [
+            'main' => $idea->photo,
+            'gallery' => $idea->gallery()->get(),
+        ]);
     }
 
     public function destroy(Idea $idea)

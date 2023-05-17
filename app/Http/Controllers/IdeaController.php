@@ -21,7 +21,10 @@ class IdeaController extends Controller
         $page = $request->page ?? 1;
 
         $ideas = match($filter) {
-            default => Idea::where('id', '>', 0),
+            'not' => Idea::where('type', 0),
+            'yes' => Idea::where('type', 1),
+            'end' => Idea::where('type', 2),
+            default => Idea::where('type', '>=', 0),
         };
 
         $ideas = match($sort) {

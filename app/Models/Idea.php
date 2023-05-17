@@ -24,6 +24,13 @@ class Idea extends Model
         'likes_asc' => 'By lowest likes',
     ];
 
+    const FILTER = [
+        'default' => 'Show all',
+        'not' => 'not approved',
+        'yes' => 'approved',
+        'end' => 'finished ',
+    ];
+
     const PER = [
         '5' => '5',
         '10' => '10',

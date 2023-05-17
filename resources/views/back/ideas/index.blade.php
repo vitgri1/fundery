@@ -66,6 +66,8 @@
                                     </div>
                                     @if ($idea->type == 1)
                                     <div style="color:aqua;">approved</div>
+                                    @elseif($idea->type == 2)
+                                    <div style="color:green;">finished</div>
                                     @else
                                     <div style="color:red;">not approved</div>
                                     @endif

@@ -41,7 +41,14 @@
                                 Edit your idea
                             </a>
                         </li>
-                        @endif   
+                        @endif  
+                        @if (Auth::user()->role < 2)
+                        <li class="nav-item nav-link">
+                            <a class="dropdown-item" href="{{ route('admin-index')}}">
+                                ADMIN
+                            </a>
+                        </li>
+                        @endif    
                     </ul>
 
                     <!-- Right Side Of Navbar -->

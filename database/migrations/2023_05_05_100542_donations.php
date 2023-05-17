@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('donations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('amount');
+            $table->double('amount', 15, 2);
             $table->unsignedBigInteger('donator_id');
             $table->dateTime('created_at');
             $table->unsignedBigInteger('idea_id');

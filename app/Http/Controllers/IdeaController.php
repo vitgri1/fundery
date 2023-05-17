@@ -380,7 +380,7 @@ class IdeaController extends Controller
         $pledge->created_at = date("Y-m-d H:i:s");
         $pledge->save();
         return redirect()
-        ->route('front-index')
+        ->route('front-show', $idea)
         ->with('ok', 'Your pledge was accepted');
     }
 

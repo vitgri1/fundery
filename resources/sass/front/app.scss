@@ -43,7 +43,46 @@ span.rem {
 }
 
 .finished-idea {
-    background-color: red;
+    background-color: lightblue;
+}
+
+.list-group-item {
+    .idea-title {
+        text-transform: capitalize;
+    }
+    .idea-info {
+        display: flex;
+        gap: 2em;
+        .idea-left {
+        width: 200px;
+        height: 200px;
+        display: inline-block;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .idea-right {
+            display: inline-block;
+            .tags{
+                .tag:first-child {
+                    padding-left: 0;
+                }
+            }
+        }
+    }
+    
+    *{
+        text-decoration: none;
+        color: inherit;
+    }
+    &:hover {
+        opacity: 0.8;
+        background-color: hsl(0, 0%, 90%);
+        *{
+            color: inherit;
+        }
+    }
 }
 
 .sort-filter-buttons {

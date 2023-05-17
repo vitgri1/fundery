@@ -365,6 +365,11 @@ class IdeaController extends Controller
             ->route('login');
         }
 
+        if ($idea->type != 1) {
+            return redirect()
+            ->back();
+        }
+
         $validator = Validator::make($request->all(), [
             'amount' => 'required|numeric|decimal:0,2|gt:0',
             'donator_id' => 'required|integer'
@@ -383,6 +388,13 @@ class IdeaController extends Controller
         $pledge->donator_id = $request->donator_id;
         $pledge->created_at = date("Y-m-d H:i:s");
         $pledge->save();
+
+        if($idea->totalDonated() >= $idea->funds){
+            $idea->update([
+                'type' => 2
+            ]);
+        }
+
         return redirect()
         ->route('front-show', $idea)
         ->with('ok', 'Your pledge was accepted');
@@ -412,7 +424,7 @@ class IdeaController extends Controller
             ->back()
             ->with('info', 'You already liked this');
         }
-        
+
         $hearts[] = $request->heart_id;
         $idea->hearts = $hearts;
         $idea->likes++;

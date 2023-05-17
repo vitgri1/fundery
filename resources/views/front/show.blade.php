@@ -60,6 +60,7 @@
                         <div class="card-body">
                             <h2 class="card-title">Donate</h2>
                             {{-- Funds --}}
+                            @if($idea->type == 1)
                             <form action="{{route('front-pledge', $idea)}}" method="post" class="input-group mb-3">
                                 <input class="form-control" type="text" name="amount">
                                 <input type="hidden" name="donator_id" value="{{Auth::id() ?? 0}}">
@@ -67,6 +68,7 @@
                                 @csrf
                                 @method('put')
                             </form>
+                            @endif
                             @if ($idea->funds - $idea->totalDonated() <= 0)
                             <div class="funds-section">Requested funds collected</div>
                             @else

@@ -61,43 +61,58 @@
                         @forelse($ideas as $idea)
                         <li class="list-group-item @if($idea->type > 1) finished-idea @endif">
                             <a href="{{route('front-show', $idea)}}">
-                                <div>
+                                <h2 class="idea-title">
                                     {{$idea->title}}
+                                </h2>
+                                <div class="idea-info">
+                                    <div class="idea-left">
+                                        @if ($idea->photo)
+                                        <img src="{{asset('ideas-photo') .'/t_'. $idea->photo}}">
+                                        @else
+                                        <img src="{{asset('ideas-photo') .'/no.png'}}">
+                                        @endif
+                                    </div>
+                                    <div class="idea-right">
+                                        {{-- tags --}}
+                                        <div class="tags">
+                                            @foreach($idea->tags as $tag)
+                                            <div class="tag">{{$tag->title}}</div>
+                                            @endforeach
+                                        </div>
+                                        {{-- description --}}
+                                        <div>
+                                            Description: 
+                                            @if(strlen($idea->description) < 40 ) {{$idea->description}}
+                                            @else
+                                            {{substr($idea->description, 0, 40)}}...
+                                            @endif
+                                        </div>
+                                        {{-- funds --}}
+                                        @if ($idea->funds - $idea->totalDonated() <= 0)
+                                        <div>Requested funds collected</div>
+                                        @else
+                                        <div>
+                                            Total amount needed: {{$idea->funds}} eur
+                                        </div>
+                                        <div>
+                                            Donated so far: {{$idea->totalDonated()}} eur
+                                        </div>
+                                        <div>
+                                            Funds needed to fulfill the goal: {{$idea->funds - $idea->totalDonated()}} eur
+                                        </div>
+                                        <div class="progress" role="progressbar">
+                                            <div class="progress-bar bg-info" style="width:{{100*$idea->totalDonated()/$idea->funds}}%">{{$idea->totalDonated()}}</div>
+                                          </div>
+                                        @endif
+                                        
+                                        {{-- hearts --}}
+                                        <div>
+                                            Hearts:  {{$idea->likes()}}
+                                        </div>
+                                        
+                                    </div>
                                 </div>
-                                <div>
-                                    Hearts:  {{$idea->likes()}}
-                                </div>
-                                <div>
-                                    @if ($idea->photo)
-                                    <img src="{{asset('ideas-photo') .'/t_'. $idea->photo}}">
-                                    @else
-                                    <img src="{{asset('ideas-photo') .'/no.png'}}">
-                                    @endif
-                                </div>
-                                {{-- funds --}}
-                                @if ($idea->funds - $idea->totalDonated() <= 0)
-                                <div>Requested funds collected</div>
-                                @else
-                                <div>
-                                    Total amount needed: {{$idea->funds}} eur
-                                </div>
-                                <div>
-                                    Donated so far: {{$idea->totalDonated()}} eur
-                                </div>
-                                <div>
-                                    Needed to fulfill the goal: {{$idea->funds - $idea->totalDonated()}} eur
-                                </div>
-                                @endif
-                                {{-- description --}}
-                                <div>
-                                    Description:  {{$idea->description}}
-                                </div>
-                                {{-- tags --}}
-                                <div class="tags">
-                                    @foreach($idea->tags as $tag)
-                                    <div class="tag">{{$tag->title}}</div>
-                                    @endforeach
-                                </div>
+                                
                             </a>
                         </li>
                         @empty

@@ -250,7 +250,15 @@ class IdeaController extends Controller
             ->route('front-create')
             ->with('info', 'Create idea first');
         }
+
         $idea = Idea::where('id', $request->user()->idea_id)->first();
+
+        if ($idea->type == '1') {
+            return redirect()
+            ->route('front-index')
+            ->with('info', 'Idea was approved and can no longer be edited');
+        }
+
         $tags = $idea->ideaTag()->pluck('tag_id');
         $tags = Tag::whereIn('id', $tags)->get();
         return view('front.edit', [

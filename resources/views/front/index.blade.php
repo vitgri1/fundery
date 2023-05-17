@@ -24,10 +24,11 @@
                                 </div>
                                 <div class="col-3">
                                     <div class="mb-3">
-                                        <label class="form-label">Filter</label>
+                                        <label class="form-label">Filter by tags</label>
                                         <select class="form-select" name="filter">
-                                            @foreach($filterSelect as $value => $text)
-                                            <option value="{{$value}}" @if($value===$filter) selected @endif>{{$text}}</option>
+                                            <option value="0" @if($value==$filter) selected @endif>all ideas</option>
+                                            @foreach($filterSelect as $option)
+                                            <option value="{{$option->id}}" @if($option->id==$filter) selected @endif>{{$option->title}}</option>
                                             @endforeach
                                         </select>
                                         <div class="form-text">Filter preferences</div>

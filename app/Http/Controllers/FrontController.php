@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Idea;
 use App\Models\Tag;
+use App\Models\IdeaTag;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
@@ -17,9 +18,17 @@ class FrontController extends Controller
 
         $ideas = Idea::where('type', 1);
 
-        $ideas = match($filter) {
-            default => $ideas->where('id', '>', 0),
-        };
+        $ideaTags = IdeaTag::where('tag_id', $filter)->pluck('idea_id')->all();
+
+        if ($filter == 0 || $filter ===''){
+            $ideas->where('id', '>', 0);
+        } else {
+            $ideas = $ideas->whereIn('id', $ideaTags);
+        }
+
+        // $ideas = match($filter) {
+        //     default => $ideas->where('id', '>', 0),
+        // };
 
         $ideas = match($sort) {
             'title_asc' => $ideas->orderBy('title'),
@@ -40,7 +49,7 @@ class FrontController extends Controller
             'ideas' => $ideas,
             'sortSelect' => Idea::SORT,
             'sort' => $sort,
-            'filterSelect' => Idea::FILTER,
+            'filterSelect' => Tag::all(),
             'filter' => $filter,
             'perSelect' => Idea::PER,
             'per' => $per,

@@ -19,16 +19,15 @@ span.rem {
 
 .tags {
     display: flex;
-    padding: 0 0 20px 0;
     .tag {
-        color: skyblue;
+        color: darkorchid;;
         padding: 0 7px;
-        font-size: 20px;
+        font-size: 1.25em;
         position: relative;
         &::before {
             content: '#';
             font-weight: bold;
-            font-size: 1.2em;
+            font-size: 1.1em;
         }
     }
 }
@@ -58,5 +57,64 @@ span.rem {
     a {
         top: -6px;
         position: relative;
+    }
+}
+
+.vertical-progress-bar {
+    background-color: green;
+    height: 33vh;
+    transform: rotate(180deg);
+    .vertical-progress-bar-color {
+        background-color: darkorchid;
+        min-width: 10px;
+        min-height: 1%;
+    }
+}
+
+.card{
+    overflow: hidden;
+}
+
+.funds-section > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    span{
+        font-weight: bold;
+        margin-left: 0.5em;
+    }
+}
+
+.donator {
+    display: flex;
+    justify-content: space-between;
+}
+
+.like-tag-line{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+    .like {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        .hearts {
+            color: darkorchid;
+        }
+        .btn {
+            margin-left: 1em;
+            font-size: 24px;
+            line-height: 1.5em;
+            width: 1.5em;
+        }
+    }
+}
+
+.gallery-section {
+    margin-top: 1em;
+    .no-photo {
+        width: 200px;
+        height: 200px;
     }
 }

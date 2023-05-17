@@ -140,6 +140,13 @@ class IdeaController extends Controller
     
     public function create(Request $request)
     {
+       
+        if ($request->user() && $request->user()->idea_id != '0') {
+            return redirect()
+            ->route('front-index')
+            ->with('info', 'Already have an idea created');
+        }
+
         return view('front.create', [
             'user' => $request->user()
         ]);
@@ -217,7 +224,6 @@ class IdeaController extends Controller
         ->with('ok', 'New idea was created');
     }
 
-    //back for sure
     public function confirm(Idea $idea)
     {
         $idea->type = 1;

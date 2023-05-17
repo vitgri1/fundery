@@ -312,6 +312,7 @@ class IdeaController extends Controller
             $idea->update([
                 'title' => $request->title,
                 'description' => $request->description,
+                'funds' => $request->funds,
             ]);
         }
 

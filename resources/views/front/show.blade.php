@@ -10,7 +10,7 @@
                     <h1>Idea: {{$idea->id}}</h1>
                     {{-- Like --}}
                     <form action="{{route('front-like', $idea)}}" method="post" class="mb-3">
-                        <input type="hidden" name="heart_id" value="{{$user->id ?? 0}}">
+                        <input type="hidden" name="heart_id" value="{{Auth::id() ?? 0}}">
                         <button type="submit" class="btn btn-outline-warning">Like</button>
                         @csrf
                         @method('put')
@@ -84,7 +84,7 @@
                             </ul>
                             <form action="{{route('front-pledge', $idea)}}" method="post" class="input-group mb-3">
                                 <input class="form-control" type="text" name="amount">
-                                <input type="hidden" name="donator_id" value="{{$user->id ?? 0}}">
+                                <input type="hidden" name="donator_id" value="{{Auth::id() ?? 0}}">
                                 <button type="submit" class="btn btn-warning">Donate</button>
                                 @csrf
                                 @method('put')

@@ -249,7 +249,6 @@ class IdeaController extends Controller
 
         return view('back.ideas.show', [
             'idea' => $idea,
-            'user' => $request->user(),
             'donations' => $donations
         ]);
     }
@@ -391,9 +390,10 @@ class IdeaController extends Controller
 
     public function like(Request $request, Idea $idea)
     {
-        if ($request->heart_id == '0') {
+        if ($request->heart_id <= 0) {
             return redirect()
-            ->route('login');
+            ->route('login')
+            ->with('info', 'Log in to like an idea');
         }
 
         $validator = Validator::make($request->all(), [
@@ -407,6 +407,12 @@ class IdeaController extends Controller
         }
 
         $hearts = $idea->hearts;
+        if(in_array($request->heart_id, $hearts)){
+            return redirect()
+            ->back()
+            ->with('info', 'You already liked this');
+        }
+        
         $hearts[] = $request->heart_id;
         $idea->hearts = $hearts;
         $idea->likes++;

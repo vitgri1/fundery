@@ -31,13 +31,6 @@
                                 {{$idea->title}}
                             </div>
                             <div>
-                                @if ($idea->type == 1)
-                                approved
-                                @else
-                                not approved
-                                @endif
-                            </div>
-                            <div>
                                 Hearts:  {{$idea->likes()}}
                             </div>
                             <div>
@@ -55,6 +48,9 @@
                             </a>
                         </div>
                         {{-- Funds --}}
+                        @if ($idea->funds - $idea->totalDonated() <= 0)
+                        <div class="funds-section">Requested funds collected</div>
+                        @else
                         <div class="funds-section">
                             <div>
                                 Total amount needed: {{$idea->funds}} eur
@@ -94,6 +90,7 @@
                                 @method('put')
                             </form>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -73,6 +73,10 @@
                                     <img src="{{asset('ideas-photo') .'/no.png'}}">
                                     @endif
                                 </div>
+                                {{-- funds --}}
+                                @if ($idea->funds - $idea->totalDonated() <= 0)
+                                <div>Requested funds collected</div>
+                                @else
                                 <div>
                                     Total amount needed: {{$idea->funds}} eur
                                 </div>
@@ -82,10 +86,12 @@
                                 <div>
                                     Needed to fulfill the goal: {{$idea->funds - $idea->totalDonated()}} eur
                                 </div>
+                                @endif
+                                {{-- description --}}
                                 <div>
                                     Description:  {{$idea->description}}
                                 </div>
-
+                                {{-- tags --}}
                                 <div class="tags">
                                     @foreach($idea->tags as $tag)
                                     <div class="tag">{{$tag->title}}</div>

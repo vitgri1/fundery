@@ -26,13 +26,11 @@ class FrontController extends Controller
             $ideas = $ideas->whereIn('id', $ideaTags);
         }
 
-        // $ideas = match($filter) {
-        //     default => $ideas->where('id', '>', 0),
-        // };
-
         $ideas = match($sort) {
             'title_asc' => $ideas->orderBy('title'),
             'title_desc' => $ideas->orderBy('title', 'desc'),
+            'likes_asc' => $ideas->orderBy('likes'),
+            'likes_desc' => $ideas->orderBy('likes', 'desc'),
             default => $ideas->orderBy('title')
         };
 

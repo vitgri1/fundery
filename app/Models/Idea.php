@@ -10,7 +10,7 @@ class Idea extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'type', 'funds', 'created_at', 'tags', 'hearts', 'photo'];
+    protected $fillable = ['title', 'description', 'type', 'funds', 'created_at', 'tags', 'hearts', 'photo', 'likes'];
     public $timestamps = false;
     protected $casts = [
         'tag_ids' => 'array',
@@ -20,11 +20,8 @@ class Idea extends Model
     const SORT = [
         'title_asc' => 'By title A-Z',
         'title_desc' => 'By title Z-A',
-    ];
-
-    const FILTER = [
-        'default' => 'Show all',
-
+        'likes_desc' => 'By most likes',
+        'likes_asc' => 'By lowest likes',
     ];
 
     const PER = [

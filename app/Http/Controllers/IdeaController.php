@@ -404,6 +404,7 @@ class IdeaController extends Controller
         $hearts = $idea->hearts;
         $hearts[] = $request->heart_id;
         $idea->hearts = $hearts;
+        $idea->likes++;
         $idea->save();
         return redirect()
         ->route('front-index')

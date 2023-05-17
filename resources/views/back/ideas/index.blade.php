@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="col-3">
                                     <div class="mb-3">
-                                        <label class="form-label">Filter</label>
+                                        <label class="form-label">Filter by type</label>
                                         <select class="form-select" name="filter">
                                             @foreach($filterSelect as $value => $text)
                                             <option value="{{$value}}" @if($value===$filter) selected @endif>{{$text}}</option>

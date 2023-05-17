@@ -16,7 +16,7 @@ class FrontController extends Controller
         $per = (int) ($request->per ?? 10);
         $page = $request->page ?? 1;
 
-        $ideas = Idea::where('type', 1);
+        $ideas = Idea::where('type', '>', 0);
 
         $ideaTags = IdeaTag::where('tag_id', $filter)->pluck('idea_id')->all();
 
@@ -26,6 +26,7 @@ class FrontController extends Controller
             $ideas = $ideas->whereIn('id', $ideaTags);
         }
 
+        $ideas = $ideas->orderBy('type'); //sort fnished to bottom
         $ideas = match($sort) {
             'title_asc' => $ideas->orderBy('title'),
             'title_desc' => $ideas->orderBy('title', 'desc'),

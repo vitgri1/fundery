@@ -59,7 +59,7 @@
                 <div class="card-body">
                     <ul class="list-group">
                         @forelse($ideas as $idea)
-                        <li class="list-group-item">
+                        <li class="list-group-item @if($idea->type > 1) finished-idea @endif">
                             <a href="{{route('front-show', $idea)}}">
                                 <div>
                                     {{$idea->title}}

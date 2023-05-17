@@ -16,7 +16,7 @@ return new class extends Migration
             $table->dateTime('created_at');
             $table->string('title', 100);
             $table->string('description', 1000);
-            $table->unsignedTinyInteger('type'); //0 - not approved; 1 - approved;
+            $table->unsignedTinyInteger('type'); //0 - not approved; 1 - approved; 2 - finished;
             $table->double('funds', 15, 2);
             $table->json('hearts');
             $table->unsignedBigInteger('likes')->default(0);

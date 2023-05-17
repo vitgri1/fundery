@@ -59,7 +59,7 @@
                 <div class="card-body">
                     <ul class="list-group">
                         @forelse($ideas as $idea)
-                        <li class="list-group-item @if($idea->type > 1) finished-idea @endif">
+                        <li class="list-group-item fundery-list @if($idea->type > 1) finished-idea @endif">
                             <a href="{{route('front-show', $idea)}}">
                                 <h2 class="idea-title">
                                     {{$idea->title}}
@@ -91,12 +91,6 @@
                                         @if ($idea->funds - $idea->totalDonated() <= 0)
                                         <div>Requested funds collected</div>
                                         @else
-                                        <div>
-                                            Total amount needed: {{$idea->funds}} eur
-                                        </div>
-                                        <div>
-                                            Donated so far: {{$idea->totalDonated()}} eur
-                                        </div>
                                         <div>
                                             Funds needed to fulfill the goal: {{$idea->funds - $idea->totalDonated()}} eur
                                         </div>

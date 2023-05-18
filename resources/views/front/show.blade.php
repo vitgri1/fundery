@@ -104,8 +104,10 @@
                     </div>
                     <div class="vertical-progress-bar card-body col-md-2 p-2">
                         <div class="vertical-progress-bar-color"
-                        @if($idea->funds - $idea->totalDonated() > 0)
-                        style="height:{{100 * $idea->totalDonated() / $idea->funds}}%;" 
+                        @if($idea->funds - $idea->totalDonated() > 0 && (100 * $idea->totalDonated() / $idea->funds) <= 100)
+                        style="height:{{100 * $idea->totalDonated() / $idea->funds}}%;"
+                        @else
+                        style="height:100%;"
                         @endif></div>
                     </div>
                 </div>

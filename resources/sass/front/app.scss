@@ -19,6 +19,7 @@ span.rem {
 
 .tags {
     display: flex;
+    flex-direction: column;
     .tag {
         color: darkorchid;;
         padding: 0 7px;
@@ -28,6 +29,26 @@ span.rem {
             content: '#';
             font-weight: bold;
             font-size: 1.1em;
+        }
+    }
+    .added-tags {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .list {
+        display: none;
+        padding: 15px;
+        border: 1px solid darkorchid;
+        background-color: white;
+        width: 100%;
+        box-sizing: border-box;
+        .list-tag {
+            cursor: pointer;
+            transition: all 0.3s;
+            &:hover {
+                background-color: rgb(13, 202, 240);
+                color: white;
+            }
         }
     }
 }

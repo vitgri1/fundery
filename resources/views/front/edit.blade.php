@@ -29,6 +29,7 @@
                         </div>
                         {{-- tags --}}
                         <div class="mb-3 --edit--tags">
+                            <label class="form-label">Tags</label>
                             @include('front.tags')
                         </div>
                         {{-- photos --}}

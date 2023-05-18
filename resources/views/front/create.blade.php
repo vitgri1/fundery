@@ -27,6 +27,7 @@
                             <input type="text" class="form-control" name="funds" value={{old('funds')}}>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Tags</label>
                             @include('front.tags')
                         </div>
                         {{-- Main photo --}}

@@ -64,7 +64,7 @@ class DatabaseSeeder extends Seeder
                 'title' => $faker->word,
                 'description' => $faker->text($maxNbChars = 200),
                 'type' => rand(0,1),
-                'funds' => rand(1,99999),
+                'funds' => rand(1,9999)+ rand(0,99)/100,
                 'created_at' => $faker->dateTime,
                 'hearts' => json_encode([])
             ]);
